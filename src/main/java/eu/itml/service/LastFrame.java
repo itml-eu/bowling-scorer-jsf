@@ -22,15 +22,16 @@ public class LastFrame extends Frame {
             }
             currentTry++;
         } else if (currentTry == 2) {
-            this.hits.add(pins);
 
             if (pins == 0) {
                 misses.set(1, true);
             }
+            this.hits.add(pins);
 
             // if strike wasn't at first hit then check if second was spare
             if (!strikes.get(0)) {
                 if (this.hits.get(0) + pins > MAX_PINS) {
+                    this.hits.remove(1);
                     throw new IllegalArgumentException("Max 10 pins!");
                 }
                 if (getPoints(this) == MAX_PINS) {
