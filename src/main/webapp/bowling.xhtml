@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Bowling Wertungstafel</title>
+</h:head>
+
+<h:body>
+    <h:form id="form">
+        <p:panel header="Bowling Spiel">
+            <h:messages errorClass="error" style="color:darkred; list-style: none; border: 1px solid darkred; padding: 7px; display: inline-block;" id="error" />
+
+            <h:panelGrid columns="2" cellpadding="4">
+
+                <h:outputText value="Anzeige: " />
+                <p:inputText id="pinsToRoll" value="#{gameBean.pins}" />
+
+                <p:commandButton id="roll" update="@form"  value="Roll" action="#{gameFacade.roll(gameBean.pins)}" />
+                <p:commandButton id="reset" update="@form"  value="Reset" action="#{gameFacade.resetGame()}" />
+            </h:panelGrid>
+        </p:panel>
+
+        <p:panel id="geworfen-pins">
+            Geworfen pins: <h:outputText value="#{gameBean.pins}" />
+        </p:panel>
+        <p:panel id="gesamt-punkte">
+            Gesamtpunkte: <h:outputText value="#{gameFacade.totalScore}" />
+        </p:panel>
+
+        <h2><h:outputText value="Wertungstafel"></h:outputText></h2>
+        <h:dataTable value="#{gameFacade.frameBeans}" var="p" border="1">
+
+            <h:column>
+                <f:facet name="header">Frame nummer</f:facet>
+                <h:outputText value="#{p.frameNo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">geworfene Pins</f:facet>
+                <ui:repeat var="h" value="#{p.hits}" varStatus="status">
+                    <h:outputText rendered="#{h > 0}" value="[#{h}]"/>
+                    <h:outputText rendered="#{p.strikes[0]}" value="[X]"/>
+
+                    <h:outputText rendered="#{p.misses[status.index]}" value="[-]"/>
+                    <h:outputText rendered="#{p.spares[0] and status.index == 1}" value="[/]"/>
+                </ui:repeat>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Spare</f:facet>
+                <c:if test="#{p.frameNo != 10}">
+                    <h:outputText rendered="#{p.spares[0]}" value="/"/>
+                </c:if>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Strike</f:facet>
+                <c:if test="#{p.frameNo != 10}">
+                    <h:outputText rendered="#{p.strikes[0]}" value="X"/>
+                </c:if>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Miss</f:facet>
+                <c:if test="#{p.frameNo != 10}">
+                    <h:outputText rendered="#{p.misses[0]}" value="-"/>
+                    <h:outputText rendered="#{p.misses[1]}" value="-"/>
+                </c:if>
+            </h:column>
+        </h:dataTable>
+
+    </h:form>
+
+
+
+</h:body>
+</html>
