@@ -30,6 +30,9 @@ public class LastFrame extends Frame {
 
             // if strike wasn't at first hit then check if second was spare
             if (!strikes.get(0)) {
+                if (this.hits.get(0) + pins > MAX_PINS) {
+                    throw new IllegalArgumentException("Max 10 pins!");
+                }
                 if (getPoints(this) == MAX_PINS) {
                     spares.add(1, true);
                     currentTry++; // extra shot

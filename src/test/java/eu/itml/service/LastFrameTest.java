@@ -133,4 +133,33 @@ public class LastFrameTest {
         assertTrue(frame.getStrikes().get(1));
         assertTrue(frame.getMisses().get(2));
     }
+
+    @Test
+    public void shouldHitSpareAndLastStrike() {
+        LastFrame frame = new LastFrame();
+        frame.setPoints(3);
+        assertFalse(frame.isCompleted());
+
+        frame.setPoints(7);
+        assertFalse(frame.isCompleted());
+
+        frame.setPoints(10);
+        assertTrue(frame.isCompleted());
+        assertEquals(20, frame.getPoints());
+
+        assertTrue(frame.getStrikes().get(2));
+    }
+
+    @Test
+    public void shouldNotHitSecondStrikeWhenFirstWasNot() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Max 10 pins!");
+
+        LastFrame frame = new LastFrame();
+        frame.setPoints(3);
+        assertFalse(frame.isCompleted());
+
+        frame.setPoints(10);
+        assertFalse(frame.isCompleted());
+    }
 }

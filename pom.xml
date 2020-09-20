@@ -8,8 +8,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>JSF - PrimeFaces Hello World Example using Apache Tomcat and Maven</name>
-  <url>https://www.codenotfound.com/jsf-primefaces-hello-world-example-apache-tomcat.html</url>
+  <name>Bowling Wertungstafel</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
