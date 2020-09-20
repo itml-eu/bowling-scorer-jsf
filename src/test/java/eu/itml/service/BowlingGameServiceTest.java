@@ -17,7 +17,7 @@ public class BowlingGameServiceTest {
     @Test
     public void shouldNotRollFor11Pins() {
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage("Max pins is 10");
+        exception.expectMessage("Max pins ist 10");
 
         BowlingGameService bowlingGameService = new BowlingGameServiceImpl();
         bowlingGameService.roll(11);
@@ -26,7 +26,7 @@ public class BowlingGameServiceTest {
     @Test
     public void shouldNotRollForNegativePins() {
         exception.expect(IllegalArgumentException.class);
-        exception.expectMessage("Pins cannot be nagative");
+        exception.expectMessage("Pins könnte nicht negativ sein!");
 
         BowlingGameService bowlingGameService = new BowlingGameServiceImpl();
         bowlingGameService.roll(-1);

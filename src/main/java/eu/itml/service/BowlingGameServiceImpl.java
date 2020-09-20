@@ -45,12 +45,6 @@ public class BowlingGameServiceImpl implements BowlingGameService {
         if (gameCompleted) {
             throw new IllegalArgumentException("Spiel wurde beendet!");
         }
-        if (pins > MAX_PINS) {
-            throw new IllegalArgumentException(String.format("Max pins ist %s", MAX_PINS));
-        }
-        if (pins < 0) {
-            throw new IllegalArgumentException("Pins könnte nicht negativ sein!");
-        }
     }
 
     private void createReference(Frame frame) {
@@ -82,7 +76,7 @@ public class BowlingGameServiceImpl implements BowlingGameService {
     private Frame createFrame() {
         Frame frame;
         if (isLastRound()) {
-            frame = new LastFrame(round);
+            frame = new LastFrame();
         } else {
             frame = new Frame(round);
         }

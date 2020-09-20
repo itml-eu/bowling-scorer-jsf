@@ -24,6 +24,7 @@ public class Frame implements Frameable {
     public Frame() {
         misses.add(0, false);
         misses.add(1, false);
+        misses.add(2, false);
 
         spares.add(0, false);
         spares.add(1, false);
@@ -40,6 +41,11 @@ public class Frame implements Frameable {
     }
 
     protected void setPoints(int pins) {
+        validatePins(pins);
+
+        if (completed) {
+            return;
+        }
         if (pins == MAX_PINS) {
             this.hits.add(MAX_PINS);
             strikes.add(0, true);
@@ -72,6 +78,15 @@ public class Frame implements Frameable {
         }
     }
 
+    protected void validatePins(int pins) {
+        if (pins > MAX_PINS) {
+            throw new IllegalArgumentException(String.format("Max pins ist %s", MAX_PINS));
+        }
+        if (pins < 0) {
+            throw new IllegalArgumentException("Pins könnte nicht negativ sein!");
+        }
+    }
+
     /**
      * Sum points in given frame
      *
@@ -83,7 +98,7 @@ public class Frame implements Frameable {
                 .sum();
     }
 
-    private int getPoints() {
+    public int getPoints() {
         return getPoints(this);
     }
 

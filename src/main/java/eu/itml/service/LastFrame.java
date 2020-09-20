@@ -5,11 +5,13 @@ import static eu.itml.service.BowlingGameService.MAX_ROUNDS;
 
 public class LastFrame extends Frame {
 
-    public LastFrame(Integer round) {
-        super(round);
+    public LastFrame() {
+        super(MAX_ROUNDS);
     }
 
     public void setPoints(int pins) {
+        validatePins(pins);
+
         if (currentTry == 1) {
             this.hits.add(pins);
             if (pins == 0) {
@@ -37,8 +39,8 @@ public class LastFrame extends Frame {
             } else { // strike was at 1 shot
                 if (pins == MAX_PINS) {
                     strikes.set(1, true); // second strike
-                    currentTry++; // get extra shot
                 }
+                currentTry++;
             }
         } else if (currentTry == 3) {
             this.hits.add(pins);
@@ -56,6 +58,7 @@ public class LastFrame extends Frame {
                 spares.set(2, true);
                 completed = true;
             }
+            completed = true;
         }
     }
 
